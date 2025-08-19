@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '10.0'
+platform :ios, '13.0'
 
 target 'ViewHierarchyDebug_Example' do
   pod 'ViewHierarchyDebug', :path => '../'
@@ -8,6 +8,6 @@ target 'ViewHierarchyDebug_Example' do
   target 'ViewHierarchyDebug_Tests' do
     inherit! :search_paths
 
-    
+    pod 'SnapKit'
   end
 end

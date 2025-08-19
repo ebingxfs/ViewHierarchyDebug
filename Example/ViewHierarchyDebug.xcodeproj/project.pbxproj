@@ -29,9 +29,9 @@
 
 /* Begin PBXFileReference section */
 		05CDE2BCD0C759928055C270 /* Pods-ViewHierarchyDebug_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViewHierarchyDebug_Example.release.xcconfig"; path = "Target Support Files/Pods-ViewHierarchyDebug_Example/Pods-ViewHierarchyDebug_Example.release.xcconfig"; sourceTree = "<group>"; };
-		0967E72435A5DDE10456C184 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		0967E72435A5DDE10456C184 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		240B028CAE008E9BB8B0B6DA /* Pods-ViewHierarchyDebug_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViewHierarchyDebug_Tests.release.xcconfig"; path = "Target Support Files/Pods-ViewHierarchyDebug_Tests/Pods-ViewHierarchyDebug_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		49D9F6AD43320E4C586D7B85 /* ViewHierarchyDebug.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = ViewHierarchyDebug.podspec; path = ../ViewHierarchyDebug.podspec; sourceTree = "<group>"; };
+		49D9F6AD43320E4C586D7B85 /* ViewHierarchyDebug.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ViewHierarchyDebug.podspec; path = ../ViewHierarchyDebug.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		607FACD01AFB9204008FA782 /* ViewHierarchyDebug_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewHierarchyDebug_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +43,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		CCE66CBE4716F600C6604748 /* Pods-ViewHierarchyDebug_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViewHierarchyDebug_Example.debug.xcconfig"; path = "Target Support Files/Pods-ViewHierarchyDebug_Example/Pods-ViewHierarchyDebug_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		D118420547C45DFDAC9F3F37 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D118420547C45DFDAC9F3F37 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F1223083082AD3CA2F2ED346 /* Pods_ViewHierarchyDebug_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ViewHierarchyDebug_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8133F68D6F74B577E85BBB9 /* Pods_ViewHierarchyDebug_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ViewHierarchyDebug_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3A0575D2E65D05B6E69093 /* Pods-ViewHierarchyDebug_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViewHierarchyDebug_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ViewHierarchyDebug_Tests/Pods-ViewHierarchyDebug_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,7 +77,6 @@
 				FB3A0575D2E65D05B6E69093 /* Pods-ViewHierarchyDebug_Tests.debug.xcconfig */,
 				240B028CAE008E9BB8B0B6DA /* Pods-ViewHierarchyDebug_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -190,6 +189,7 @@
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
+				1DB1C5043158448E13B63A22 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -227,6 +227,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -262,6 +263,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1DB1C5043158448E13B63A22 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ViewHierarchyDebug_Tests/Pods-ViewHierarchyDebug_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ViewHierarchyDebug_Tests/Pods-ViewHierarchyDebug_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		32CFD769A2628631DDA75234 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -269,10 +288,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ViewHierarchyDebug_Example/Pods-ViewHierarchyDebug_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewHierarchyDebug/ViewHierarchyDebug.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewHierarchyDebug.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

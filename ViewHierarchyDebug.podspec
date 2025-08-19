@@ -44,5 +44,5 @@ ViewHierarchyDebug是一个轻量级的iOS视图层次结构调试工具，提�
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+   s.dependency 'SnapKit'
 end

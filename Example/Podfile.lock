@@ -1,16 +1,24 @@
 PODS:
-  - ViewHierarchyDebug (0.1.0)
+  - SnapKit (5.7.1)
+  - ViewHierarchyDebug (0.1.0):
+    - SnapKit
 
 DEPENDENCIES:
+  - SnapKit
   - ViewHierarchyDebug (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - SnapKit
 
 EXTERNAL SOURCES:
   ViewHierarchyDebug:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ViewHierarchyDebug: 44aae596a00c2b03da5085776e6d51ee661e3715
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  ViewHierarchyDebug: 16ffc6976594ba26fce35c1ab0d24e0bf05fe9fe
 
-PODFILE CHECKSUM: fe0b23c57b844778763e99da13dbb38742a538cb
+PODFILE CHECKSUM: 91a03a54480b5d41136735d482bafa1629ada597
 
 COCOAPODS: 1.16.2
