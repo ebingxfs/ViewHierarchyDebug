@@ -1,0 +1,16 @@
+PODS:
+  - ViewHierarchyDebug (0.1.0)
+
+DEPENDENCIES:
+  - ViewHierarchyDebug (from `../`)
+
+EXTERNAL SOURCES:
+  ViewHierarchyDebug:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ViewHierarchyDebug: 44aae596a00c2b03da5085776e6d51ee661e3715
+
+PODFILE CHECKSUM: fe0b23c57b844778763e99da13dbb38742a538cb
+
+COCOAPODS: 1.16.2

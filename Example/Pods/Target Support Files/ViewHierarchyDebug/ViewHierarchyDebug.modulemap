@@ -1,0 +1,6 @@
+framework module ViewHierarchyDebug {
+  umbrella header "ViewHierarchyDebug-umbrella.h"
+
+  export *
+  module * { export * }
+}
