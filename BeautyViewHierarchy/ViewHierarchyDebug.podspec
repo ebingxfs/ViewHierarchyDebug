@@ -11,6 +11,8 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'ebingxfs' => 'your-email@example.com' }
   s.source           = { :git => 'https://github.com/ebingxfs/ViewHierarchyDebug.git', :tag => s.version.to_s }
+  # 本地开发时可以使用以下配置
+  # s.source           = { :path => '.' }
 
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.0'
