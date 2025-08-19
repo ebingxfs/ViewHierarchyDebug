@@ -1,6 +1,6 @@
 //
 //  ViewHierarchyDebugViewController.swift
-//  Carhood
+//  ViewHierarchyDebug
 //
 //  Created by System on 2025/8/19.
 //
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ViewHierarchyDebugViewController: UIViewController {
+public class ViewHierarchyDebugViewController: UIViewController {
     
     private var rootView: UIView
     private var rootViewController: UIViewController?
@@ -16,7 +16,7 @@ class ViewHierarchyDebugViewController: UIViewController {
     private var viewItems: [ViewItem] = []
     private var containerView: UIView!
     
-    struct ViewItem {
+    public struct ViewItem {
         let view: UIView
         let level: Int
         var isExpanded: Bool
@@ -34,13 +34,13 @@ class ViewHierarchyDebugViewController: UIViewController {
         }
     }
     
-    init(rootView: UIView, rootViewController: UIViewController? = nil) {
+    public init(rootView: UIView, rootViewController: UIViewController? = nil) {
         self.rootView = rootView
         self.rootViewController = rootViewController
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

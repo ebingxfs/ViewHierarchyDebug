@@ -1,0 +1,11 @@
+platform :ios, '11.0'
+
+target 'BeautyViewHierarchy' do
+  use_frameworks!
+  
+  # 本地引用ViewHierarchyDebug库
+  pod 'ViewHierarchyDebug', :path => './'
+  
+  # 依赖
+  pod 'SnapKit', '~> 5.0.0'
+end
