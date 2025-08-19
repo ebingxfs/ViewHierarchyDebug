@@ -7,15 +7,80 @@
 
 import UIKit
 import SnapKit
+import ObjectiveC
 
+// MARK: - ViewHierarchyDebugger
+public class ViewHierarchyDebugger {
+    
+    /// 初始化调试按钮
+    /// - Parameters:
+    ///   - viewController: 需要添加调试按钮的视图控制器
+    ///   - frame: 调试按钮的位置和大小，默认为右上角
+    public static func initDebugButton(in viewController: UIViewController, frame: CGRect? = nil) {
+        #if DEBUG
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let buttonFrame = frame ?? CGRect(x: UIScreen.main.bounds.width - 30, y: 100, width: 30, height: 30)
+            let btn = UIButton(type: .custom)
+            btn.frame = buttonFrame
+            btn.backgroundColor = .white
+            btn.layer.cornerRadius = buttonFrame.height / 2
+            btn.layer.masksToBounds = true
+            btn.setTitle("🐛", for: .normal)
+            btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+            viewController.view.addSubview(btn)
+            
+            // 创建一个包装器来处理按钮点击
+            let buttonHandler = DebugButtonHandler(viewController: viewController)
+            btn.addTarget(buttonHandler, action: #selector(DebugButtonHandler.debugButtonAction), for: .touchUpInside)
+            
+            // 将处理器存储到按钮中，防止被释放
+            objc_setAssociatedObject(btn, &AssociatedKeys.buttonHandler, buttonHandler, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+        #endif
+    }
+    
+    /// 显示视图层次调试器
+    internal static func showViewHierarchyDebugger(from viewController: UIViewController) {
+        let debugVC = ViewHierarchyDebugViewController(rootView: viewController.view, rootViewController: viewController)
+        debugVC.modalPresentationStyle = .overFullScreen
+        debugVC.modalTransitionStyle = .crossDissolve
+        viewController.present(debugVC, animated: true)
+    }
+}
+
+// MARK: - DebugButtonHandler
+private class DebugButtonHandler: NSObject {
+    weak var viewController: UIViewController?
+    
+    init(viewController: UIViewController) {
+        self.viewController = viewController
+        super.init()
+    }
+    
+    @objc func debugButtonAction() {
+        guard let viewController = viewController else { return }
+        
+        print("⭐️⭐️⭐️: \(type(of: viewController))")
+        ViewHierarchyDebugger.showViewHierarchyDebugger(from: viewController)
+    }
+}
+
+// MARK: - Associated Keys
+private struct AssociatedKeys {
+    static var buttonHandler = "buttonHandler"
+}
+
+// MARK: - ViewHierarchyDebugViewController
 class ViewHierarchyDebugViewController: UIViewController {
     
+    // MARK: - Properties
     private var rootView: UIView
     private var rootViewController: UIViewController?
     private var tableView: UITableView!
     private var viewItems: [ViewItem] = []
     private var containerView: UIView!
     
+    // MARK: - ViewItem
     struct ViewItem {
         let view: UIView
         let level: Int
@@ -34,6 +99,7 @@ class ViewHierarchyDebugViewController: UIViewController {
         }
     }
     
+    // MARK: - Initialization
     init(rootView: UIView, rootViewController: UIViewController? = nil) {
         self.rootView = rootView
         self.rootViewController = rootViewController
@@ -44,6 +110,7 @@ class ViewHierarchyDebugViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -61,9 +128,16 @@ class ViewHierarchyDebugViewController: UIViewController {
         }
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
+        setupContainerView()
+        setupTitleAndCloseButton()
+        setupTableView()
+    }
+    
+    private func setupContainerView() {
         containerView = UIView()
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 16
@@ -74,8 +148,9 @@ class ViewHierarchyDebugViewController: UIViewController {
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(UIScreen.main.bounds.height * 0.6)
         }
-        
-        // 标题栏
+    }
+    
+    private func setupTitleAndCloseButton() {
         let titleLabel = UILabel()
         titleLabel.text = "🌳 视图层次调试器"
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -97,8 +172,9 @@ class ViewHierarchyDebugViewController: UIViewController {
             make.top.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
-        
-        // 表格视图
+    }
+    
+    private func setupTableView() {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -107,11 +183,12 @@ class ViewHierarchyDebugViewController: UIViewController {
         containerView.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.top.equalToSuperview().offset(60)
             make.left.right.bottom.equalToSuperview()
         }
     }
     
+    // MARK: - Data Management
     private func buildViewHierarchy() {
         viewItems = []
         addViewToItems(rootView, level: 0)
@@ -151,11 +228,29 @@ class ViewHierarchyDebugViewController: UIViewController {
         }
     }
     
+    private func toggleExpand(at index: Int) {
+        let item = viewItems[index]
+        
+        if item.isExpanded {
+            // 收起
+            viewItems[index].isExpanded = false
+            removeChildViews(for: index)
+        } else {
+            // 展开
+            viewItems[index].isExpanded = true
+            insertChildViews(for: index)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    // MARK: - Actions
     @objc private func closeAction() {
         dismiss(animated: true)
     }
 }
 
+// MARK: - UITableViewDataSource & UITableViewDelegate
 extension ViewHierarchyDebugViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -190,26 +285,12 @@ extension ViewHierarchyDebugViewController: UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    
-    private func toggleExpand(at index: Int) {
-        let item = viewItems[index]
-        
-        if item.isExpanded {
-            // 收起
-            viewItems[index].isExpanded = false
-            removeChildViews(for: index)
-        } else {
-            // 展开
-            viewItems[index].isExpanded = true
-            insertChildViews(for: index)
-        }
-        
-        tableView.reloadData()
-    }
 }
 
+// MARK: - ViewHierarchyCell
 class ViewHierarchyCell: UITableViewCell {
     
+    // MARK: - Properties
     private let containerView = UIView()
     private let expandButton = UIButton(type: .custom)
     private let classNameLabel = UILabel()
@@ -219,6 +300,7 @@ class ViewHierarchyCell: UITableViewCell {
     var onExpandToggle: (() -> Void)?
     var onPrintAction: (() -> Void)?
     
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -229,6 +311,7 @@ class ViewHierarchyCell: UITableViewCell {
         setupUI()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         selectionStyle = .none
         
@@ -238,25 +321,14 @@ class ViewHierarchyCell: UITableViewCell {
         containerView.addSubview(frameLabel)
         containerView.addSubview(printButton)
         
+        setupConstraints()
+        configureSubviews()
+    }
+    
+    private func setupConstraints() {
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0))
         }
-        
-        expandButton.setTitle("▶", for: .normal)
-        expandButton.setTitle("▼", for: .selected)
-        expandButton.setTitleColor(.systemBlue, for: .normal)
-        expandButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        expandButton.addTarget(self, action: #selector(expandAction), for: .touchUpInside)
-        
-        classNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        classNameLabel.textColor = .black
-        
-        frameLabel.font = UIFont.systemFont(ofSize: 12)
-        frameLabel.textColor = .gray
-        
-        printButton.setTitle("📋", for: .normal)
-        printButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        printButton.addTarget(self, action: #selector(printAction), for: .touchUpInside)
         
         expandButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(8)
@@ -283,6 +355,25 @@ class ViewHierarchyCell: UITableViewCell {
         }
     }
     
+    private func configureSubviews() {
+        expandButton.setTitle("▶", for: .normal)
+        expandButton.setTitle("▼", for: .selected)
+        expandButton.setTitleColor(.systemBlue, for: .normal)
+        expandButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        expandButton.addTarget(self, action: #selector(expandAction), for: .touchUpInside)
+        
+        classNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        classNameLabel.textColor = .black
+        
+        frameLabel.font = UIFont.systemFont(ofSize: 12)
+        frameLabel.textColor = .gray
+        
+        printButton.setTitle("📋", for: .normal)
+        printButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        printButton.addTarget(self, action: #selector(printAction), for: .touchUpInside)
+    }
+    
+    // MARK: - Configuration
     func configure(with item: ViewHierarchyDebugViewController.ViewItem, hasChildren: Bool) {
         let indent = CGFloat(item.level * 20)
         
@@ -299,6 +390,7 @@ class ViewHierarchyCell: UITableViewCell {
         containerView.backgroundColor = item.level % 2 == 0 ? UIColor.systemGray6 : UIColor.white
     }
     
+    // MARK: - Actions
     @objc private func expandAction() {
         onExpandToggle?()
     }
