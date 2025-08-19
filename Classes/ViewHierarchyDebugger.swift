@@ -152,7 +152,7 @@ class ViewHierarchyDebugViewController: UIViewController {
     
     private func setupTitleAndCloseButton() {
         let titleLabel = UILabel()
-        titleLabel.text = "🌳 视图层次调试器"
+        titleLabel.text = rootViewController.map { String(describing: type(of: $0)) } ?? "Unknown"
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         titleLabel.textAlignment = .center
         containerView.addSubview(titleLabel)
