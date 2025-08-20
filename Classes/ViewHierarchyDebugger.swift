@@ -25,7 +25,7 @@ public class ViewHierarchyDebugger {
             btn.backgroundColor = .white
             btn.layer.cornerRadius = buttonFrame.height / 2
             btn.layer.masksToBounds = true
-            btn.setTitle("🐛", for: .normal)
+            btn.setTitle("🐳", for: .normal)
             btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
             viewController.view.addSubview(btn)
             

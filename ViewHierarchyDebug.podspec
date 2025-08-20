@@ -29,7 +29,7 @@ ViewHierarchyDebug是一个轻量级的iOS视图层次结构调试工具，提�
   s.homepage         = 'https://github.com/ebingxfs/ViewHierarchyDebug'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Ezreal' => 'hirey_z@hotmail.com' }
+  s.author           = { 'xxsdf' => 'xxsdf@gmail.com' }
   s.source           = { :git => 'https://github.com/ebingxfs/ViewHierarchyDebug.git', :branch => 'master' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
