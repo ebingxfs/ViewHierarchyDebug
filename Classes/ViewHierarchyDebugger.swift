@@ -19,7 +19,7 @@ public class ViewHierarchyDebugger {
     public static func initDebugButton(in viewController: UIViewController, frame: CGRect? = nil) {
         #if DEBUG
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let buttonFrame = frame ?? CGRect(x: UIScreen.main.bounds.width - 30, y: 100, width: 40, height: 40)
+            let buttonFrame = frame ?? CGRect(x: UIScreen.main.bounds.width - 40, y: 100, width: 40, height: 40)
             let btn = UIButton(type: .custom)
             btn.frame = buttonFrame
             btn.backgroundColor = .clear
