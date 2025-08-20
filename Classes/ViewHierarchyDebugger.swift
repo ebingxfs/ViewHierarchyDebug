@@ -19,12 +19,12 @@ public class ViewHierarchyDebugger {
     public static func initDebugButton(in viewController: UIViewController, frame: CGRect? = nil) {
         #if DEBUG
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let buttonFrame = frame ?? CGRect(x: UIScreen.main.bounds.width - 30, y: 100, width: 30, height: 30)
+            let buttonFrame = frame ?? CGRect(x: UIScreen.main.bounds.width - 30, y: 100, width: 40, height: 40)
             let btn = UIButton(type: .custom)
             btn.frame = buttonFrame
-            btn.backgroundColor = .white
-            btn.layer.cornerRadius = buttonFrame.height / 2
-            btn.layer.masksToBounds = true
+            btn.backgroundColor = .clear
+//            btn.layer.cornerRadius = buttonFrame.height / 2
+//            btn.layer.masksToBounds = true
             btn.setTitle("🐳", for: .normal)
             btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
             viewController.view.addSubview(btn)
